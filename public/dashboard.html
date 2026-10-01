@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI Health Triage Dashboard — Submit your symptoms and receive an instant AI-powered triage assessment." />
+  <title>Dashboard — AI Health Triage Agent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script src="/js/themeToggle.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>" />
+</head>
+<body class="min-h-screen bg-gradient-subtle text-slate-800 dark:text-slate-200">
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="fixed top-0 inset-x-0 z-50 glass-card border-b border-slate-200/60 dark:border-slate-700/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/dashboard.html" class="flex items-center gap-2.5" aria-label="Dashboard">
+          <span class="text-2xl">🩺</span>
+          <span class="text-lg font-bold bg-gradient-to-r from-teal-700 to-teal-500 bg-clip-text text-transparent">
+            HealthTriage<span class="font-light text-slate-400 dark:text-slate-500">AI</span>
+          </span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-4">
+          <span id="patient-greeting" class="hidden sm:inline text-sm font-medium text-slate-600 dark:text-slate-400"></span>
+          <a href="/history.html" class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/30 rounded-lg transition-smooth flex items-center gap-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            History
+          </a>
+          <button id="theme-toggle-btn" onclick="toggleTheme()"
+            class="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-700 transition-smooth"
+            aria-label="Switch to dark mode">
+            <svg class="icon-sun hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <button id="logout-btn" class="px-4 py-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-smooth">
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-16 px-4 sm:px-6 max-w-4xl mx-auto">
+
+    <!-- ════════════════ PAGE HEADER ════════════════ -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white mb-2">Health Assessment</h1>
+      <p class="text-slate-500 dark:text-slate-400">Complete the questionnaire below for an AI-powered triage evaluation</p>
+    </div>
+
+    <!-- ════════════════ MEDICAL DISCLAIMER ════════════════ -->
+    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 rounded-xl p-4 mb-8 animate-fade-in">
+      <div class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-amber-500 dark:text-amber-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <p class="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
+          <strong>Disclaimer:</strong> This application is for educational and informational triage assistance only. 
+          It is <strong>NOT</strong> a substitute for professional medical advice, clinical diagnosis, or emergency treatment. 
+          If you are experiencing a life-threatening medical emergency, immediately contact your local emergency services (e.g., 911/112).
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════ STEP INDICATOR ════════════════ -->
+    <div id="form-container" class="animate-fade-in-up">
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <div id="dot-1" class="step-dot active"></div>
+        <div id="line-1" class="step-line"></div>
+        <div id="dot-2" class="step-dot"></div>
+        <div id="line-2" class="step-line"></div>
+        <div id="dot-3" class="step-dot"></div>
+        <div id="line-3" class="step-line"></div>
+        <div id="dot-4" class="step-dot"></div>
+      </div>
+      <p id="step-label" class="text-center text-sm font-medium text-teal-700 dark:text-teal-400 mb-8">Patient Info</p>
+
+      <!-- ════════════════ MULTI-STEP FORM ════════════════ -->
+      <form id="triage-form" novalidate>
+
+        <!-- ──── Step 1: Demographics ──── -->
+        <div id="step-1" class="glass-card rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200/60 dark:border-slate-700/60">
+          <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+            <span class="w-8 h-8 bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 rounded-lg flex items-center justify-center text-sm font-bold">1</span>
+            Patient Information
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Tell us about yourself</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="patient-age" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Age <span class="text-red-500">*</span></label>
+              <input id="patient-age" type="number" min="0" max="150" required
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+                placeholder="e.g. 35" />
+            </div>
+            <div>
+              <label for="patient-gender" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Gender <span class="text-red-500">*</span></label>
+              <select id="patient-gender" required
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth bg-white dark:bg-slate-700">
+                <option value="">Select…</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex justify-end mt-8">
+            <button type="button" data-next-step
+              class="px-6 py-2.5 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5 flex items-center gap-2">
+              Next
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ──── Step 2: Chief Complaint ──── -->
+        <div id="step-2" class="hidden glass-card rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200/60 dark:border-slate-700/60">
+          <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+            <span class="w-8 h-8 bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 rounded-lg flex items-center justify-center text-sm font-bold">2</span>
+            Chief Complaint
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">What's your main health concern?</p>
+
+          <div class="space-y-5">
+            <div>
+              <label for="primary-symptom" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Primary Symptom <span class="text-red-500">*</span></label>
+              <input id="primary-symptom" type="text" required
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+                placeholder="e.g. Severe chest tightness" />
+            </div>
+            <div>
+              <label for="symptom-duration" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">How long have you had this symptom? <span class="text-red-500">*</span></label>
+              <input id="symptom-duration" type="text" required
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+                placeholder="e.g. 2 hours, 3 days, 1 week" />
+            </div>
+          </div>
+
+          <div class="flex justify-between mt-8">
+            <button type="button" data-prev-step
+              class="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-smooth flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" data-next-step
+              class="px-6 py-2.5 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5 flex items-center gap-2">
+              Next
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ──── Step 3: Pain & Additional Symptoms ──── -->
+        <div id="step-3" class="hidden glass-card rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200/60 dark:border-slate-700/60">
+          <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+            <span class="w-8 h-8 bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 rounded-lg flex items-center justify-center text-sm font-bold">3</span>
+            Symptoms & Pain Level
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Rate your pain and select any additional symptoms</p>
+
+          <!-- Pain Slider -->
+          <div class="mb-8">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Pain Level (1–10)</label>
+            <div class="flex items-center gap-6">
+              <div class="flex-1">
+                <input id="pain-slider" type="range" min="1" max="10" value="5" step="1" />
+                <div class="flex justify-between text-xs text-slate-400 dark:text-slate-500 mt-1 px-1">
+                  <span>Mild</span>
+                  <span>Moderate</span>
+                  <span>Severe</span>
+                </div>
+              </div>
+              <div class="text-center min-w-[60px]">
+                <span id="pain-value" class="text-3xl font-bold text-amber-500 dark:text-amber-400">5</span>
+                <p class="text-xs text-slate-400 dark:text-slate-500">/ 10</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Symptom Tags -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Other Symptoms (select all that apply)</label>
+            <div id="symptom-tags" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <!-- Additional Notes -->
+          <div>
+            <label for="additional-notes" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Additional Notes (optional)</label>
+            <textarea id="additional-notes" rows="3"
+              class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth resize-none"
+              placeholder="Any other details you'd like to share…"></textarea>
+          </div>
+
+          <div class="flex justify-between mt-8">
+            <button type="button" data-prev-step
+              class="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-smooth flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" data-next-step
+              class="px-6 py-2.5 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5 flex items-center gap-2">
+              Review
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ──── Step 4: Review & Submit ──── -->
+        <div id="step-4" class="hidden glass-card rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200/60 dark:border-slate-700/60">
+          <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+            <span class="w-8 h-8 bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 rounded-lg flex items-center justify-center text-sm font-bold">4</span>
+            Review & Submit
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Confirm your information before analysis</p>
+
+          <div id="review-summary" class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-5 mb-6 border border-slate-200 dark:border-slate-600">
+            <!-- Populated dynamically by JS -->
+          </div>
+
+          <div class="flex justify-between">
+            <button type="button" data-prev-step
+              class="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-smooth flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="submit"
+              class="px-8 py-2.5 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5 flex items-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Analyze with AI
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ════════════════ LOADING STATE ════════════════ -->
+    <div id="loading-container" class="hidden">
+      <div class="glass-card rounded-2xl p-10 shadow-lg border border-slate-200/60 dark:border-slate-700/60 text-center animate-scale-in">
+        <div class="w-16 h-16 mx-auto mb-6 border-4 border-teal-200 dark:border-teal-800 border-t-teal-600 dark:border-t-teal-400 rounded-full animate-spin"></div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Analyzing Your Symptoms…</h3>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Our AI is carefully evaluating your data to provide an accurate triage assessment.</p>
+        <div class="space-y-3 max-w-sm mx-auto">
+          <div class="skeleton h-4 w-full"></div>
+          <div class="skeleton h-4 w-5/6"></div>
+          <div class="skeleton h-4 w-4/6"></div>
+        </div>
+        <p class="text-xs text-slate-400 dark:text-slate-500 mt-6 animate-pulse-soft">This usually takes 5–15 seconds</p>
+      </div>
+    </div>
+
+    <!-- ════════════════ RESULT STATE ════════════════ -->
+    <div id="result-container" class="hidden">
+      <div id="triage-result">
+        <!-- Rendered dynamically by JS -->
+      </div>
+      <div class="text-center mt-8">
+        <button id="new-assessment-btn"
+          class="px-8 py-3 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5">
+          Start New Assessment
+        </button>
+        <a href="/history.html" class="inline-block ml-4 px-6 py-3 text-teal-700 dark:text-teal-400 font-semibold hover:bg-teal-50 dark:hover:bg-teal-900/30 rounded-xl transition-smooth">
+          View History →
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="py-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+    <p>🩺 AI Health Triage Agent — For educational purposes only. Not a medical device.</p>
+  </footer>
+
+  <script type="module">
+    import { initTriageForm } from '/js/triageForm.js';
+    document.addEventListener('DOMContentLoaded', initTriageForm);
+  </script>
+</body>
+</html>

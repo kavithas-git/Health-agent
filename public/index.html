@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="AI Health Triage Agent — Instant, AI-powered health assessment and triage guidance. Get an initial symptom evaluation powered by Google Gemini." />
+  <title>AI Health Triage Agent — Intelligent Symptom Assessment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script src="/js/themeToggle.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>" />
+</head>
+
+<body class="min-h-screen bg-gradient-subtle text-slate-800 dark:text-slate-200">
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="fixed top-0 inset-x-0 z-50 glass-card border-b border-slate-200/60 dark:border-slate-700/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2.5" aria-label="Home">
+          <span class="text-2xl">🩺</span>
+          <span class="text-lg font-bold bg-gradient-to-r from-teal-700 to-teal-500 bg-clip-text text-transparent">
+            HealthTriage<span class="font-light text-slate-400 dark:text-slate-500">AI</span>
+          </span>
+        </a>
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle-btn" onclick="toggleTheme()"
+            class="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-700 transition-smooth"
+            aria-label="Switch to dark mode">
+            <svg class="icon-sun hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg class="icon-moon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+          <button id="hero-login-btn"
+            class="px-5 py-2 text-sm font-semibold text-teal-700 hover:text-teal-800 hover:bg-teal-50 dark:text-teal-400 dark:hover:text-teal-300 dark:hover:bg-teal-900/30 rounded-lg transition-smooth">
+            Sign In
+          </button>
+          <button id="hero-register-btn"
+            class="px-5 py-2 text-sm font-semibold text-white bg-gradient-teal rounded-lg shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════ HERO SECTION ════════════════ -->
+  <main>
+    <section class="relative pt-32 pb-24 overflow-hidden bg-gradient-hero">
+      <!-- Decorative blobs -->
+      <div class="absolute top-20 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-10 w-96 h-96 bg-cyan-400/8 rounded-full blur-3xl"></div>
+
+      <div class="relative max-w-5xl mx-auto px-4 sm:px-6 text-center">
+        <div class="animate-fade-in-up">
+          <span
+            class="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest uppercase bg-teal-500/20 text-teal-300 rounded-full border border-teal-500/30">
+            AI-Powered Health Assessment
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+            Instant Health Triage,<br />
+            <span class="bg-gradient-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent">Powered by AI</span>
+          </h1>
+          <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Submit your symptoms through our guided questionnaire and receive an instant,
+            AI-generated triage assessment — helping you understand urgency and next steps.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button data-show-register
+              class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-white bg-gradient-teal rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:-translate-y-0.5">
+              Start Your Assessment →
+            </button>
+            <button data-show-login
+              class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-teal-300 border border-teal-500/40 rounded-xl hover:bg-teal-500/10 transition-smooth">
+              I Have an Account
+            </button>
+          </div>
+        </div>
+
+        <!-- Feature pills -->
+        <div class="mt-16 flex flex-wrap items-center justify-center gap-4 stagger">
+          <div class="glass-card-dark px-5 py-3 rounded-xl flex items-center gap-3 animate-fade-in opacity-0">
+            <span class="text-2xl">⚡</span>
+            <span class="text-sm font-medium text-slate-200">Instant AI Analysis</span>
+          </div>
+          <div class="glass-card-dark px-5 py-3 rounded-xl flex items-center gap-3 animate-fade-in opacity-0">
+            <span class="text-2xl">🔒</span>
+            <span class="text-sm font-medium text-slate-200">Secure & Private</span>
+          </div>
+          <div class="glass-card-dark px-5 py-3 rounded-xl flex items-center gap-3 animate-fade-in opacity-0">
+            <span class="text-2xl">📋</span>
+            <span class="text-sm font-medium text-slate-200">Assessment History</span>
+          </div>
+          <div class="glass-card-dark px-5 py-3 rounded-xl flex items-center gap-3 animate-fade-in opacity-0">
+            <span class="text-2xl">🤖</span>
+            <span class="text-sm font-medium text-slate-200">Google Gemini AI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ HOW IT WORKS ════════════════ -->
+    <section class="py-20 bg-white dark:bg-slate-900">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white mb-3">How It Works</h2>
+          <p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">Three simple steps to understand your health
+            better</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
+          <!-- Step 1 -->
+          <div
+            class="relative bg-slate-50 dark:bg-slate-800 rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-smooth hover:-translate-y-1 animate-fade-in-up opacity-0">
+            <div
+              class="w-14 h-14 mx-auto mb-5 bg-gradient-teal rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md">
+              1</div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Create an Account</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Sign up securely to track your
+              assessments and maintain a health history.</p>
+          </div>
+          <!-- Step 2 -->
+          <div
+            class="relative bg-slate-50 dark:bg-slate-800 rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-smooth hover:-translate-y-1 animate-fade-in-up opacity-0">
+            <div
+              class="w-14 h-14 mx-auto mb-5 bg-gradient-teal rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md">
+              2</div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Describe Symptoms</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Complete a guided multi-step
+              questionnaire about your current symptoms.</p>
+          </div>
+          <!-- Step 3 -->
+          <div
+            class="relative bg-slate-50 dark:bg-slate-800 rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-smooth hover:-translate-y-1 animate-fade-in-up opacity-0">
+            <div
+              class="w-14 h-14 mx-auto mb-5 bg-gradient-teal rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md">
+              3</div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Get AI Triage</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Receive an instant, detailed triage
+              report with urgency level and next steps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ MEDICAL DISCLAIMER BANNER ════════════════ -->
+    <section class="py-12 bg-amber-50 dark:bg-amber-900/20 border-y border-amber-200 dark:border-amber-700/40">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="flex items-start gap-4">
+          <div
+            class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-800/30 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-100 mb-1">Medical Disclaimer</h3>
+            <p class="text-amber-800 dark:text-amber-200 leading-relaxed">
+              This application is for <strong>educational and informational triage assistance only</strong>.
+              It is <strong>NOT</strong> a substitute for professional medical advice, clinical diagnosis, or emergency
+              treatment.
+              If you are experiencing a life-threatening medical emergency, immediately contact your local emergency
+              services
+              (e.g., <strong>108</strong>).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="py-8 bg-slate-900 text-slate-400 text-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <p class="mb-2">🩺 AI Health Triage Agent — Powered by Google Gemini AI</p>
+      <p class="text-xs text-slate-500">For educational purposes only. Not a medical device or diagnostic tool.</p>
+    </div>
+  </footer>
+
+  <!-- ════════════════ LOGIN MODAL ════════════════ -->
+  <div id="login-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="modal-content bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+      <div class="bg-gradient-hero p-6 text-center">
+        <span class="text-4xl mb-2 block">🩺</span>
+        <h2 id="login-title" class="text-xl font-bold text-white">Welcome Back</h2>
+        <p class="text-sm text-slate-300 mt-1">Sign in to your account</p>
+      </div>
+      <form id="login-form" class="p-6 space-y-5" novalidate>
+        <div>
+          <label for="login-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email
+            Address</label>
+          <input id="login-email" type="email" required autocomplete="email"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="you@example.com" />
+        </div>
+        <div>
+          <label for="login-password"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+          <input id="login-password" type="password" required autocomplete="current-password"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="••••••••" />
+        </div>
+        <button type="submit"
+          class="w-full py-3 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5">
+          Sign In
+        </button>
+        <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+          Don't have an account?
+          <button type="button" data-show-register
+            class="text-teal-600 dark:text-teal-400 font-semibold hover:underline">Sign Up</button>
+        </p>
+      </form>
+      <button data-close-modal class="absolute top-4 right-4 text-white/70 hover:text-white text-xl"
+        aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- ════════════════ REGISTER MODAL ════════════════ -->
+  <div id="register-modal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="register-title">
+    <div class="modal-content bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+      <div class="bg-gradient-hero p-6 text-center">
+        <span class="text-4xl mb-2 block">🩺</span>
+        <h2 id="register-title" class="text-xl font-bold text-white">Create Account</h2>
+        <p class="text-sm text-slate-300 mt-1">Start your health assessment journey</p>
+      </div>
+      <form id="register-form" class="p-6 space-y-4" novalidate>
+        <div>
+          <label for="register-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Full
+            Name</label>
+          <input id="register-name" type="text" required autocomplete="name"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="Jane Doe" />
+        </div>
+        <div>
+          <label for="register-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email
+            Address</label>
+          <input id="register-email" type="email" required autocomplete="email"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="you@example.com" />
+        </div>
+        <div>
+          <label for="register-password"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+          <input id="register-password" type="password" required autocomplete="new-password"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="Min. 8 characters" />
+        </div>
+        <div>
+          <label for="register-confirm-password"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Confirm Password</label>
+          <input id="register-confirm-password" type="password" required autocomplete="new-password"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-smooth"
+            placeholder="••••••••" />
+        </div>
+        <button type="submit"
+          class="w-full py-3 bg-gradient-teal text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-smooth hover:-translate-y-0.5">
+          Create Account
+        </button>
+        <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+          Already have an account?
+          <button type="button" data-show-login
+            class="text-teal-600 dark:text-teal-400 font-semibold hover:underline">Sign In</button>
+        </p>
+      </form>
+      <button data-close-modal class="absolute top-4 right-4 text-white/70 hover:text-white text-xl"
+        aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initAuth } from '/js/auth.js';
+    document.addEventListener('DOMContentLoaded', initAuth);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "ai-health-triage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Health Triage Agent — Full-stack app with Vercel serverless deployment, powered by Google Gemini",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node backend/server.js",
+    "dev:local": "node --watch backend/server.js",
+    "db:init": "node -e \"require('dotenv').config({path:'backend/.env'});require('./backend/config/db').initializeDatabase().then(()=>{console.log('Done');process.exit(0)}).catch(e=>{console.error(e);process.exit(1)})\""
+  },
+  "keywords": ["health", "triage", "ai", "gemini", "vercel", "serverless"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0"
+  }
+}

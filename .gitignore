@@ -1,0 +1,26 @@
+# ── Dependencies ─────────────────────────────────────────────
+node_modules/
+backend/node_modules/
+
+# ── Environment Variables ────────────────────────────────────
+.env
+.env.local
+.env.*.local
+backend/.env
+.env.example
+
+# ── Vercel ───────────────────────────────────────────────────
+.vercel/
+
+# ── OS & Editor ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+npm-debug.log*
